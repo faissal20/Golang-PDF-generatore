@@ -9,16 +9,16 @@ import (
 
 func main() {
 
-	bin := ""
+	// bin := ""
 	// print args
 	// print all args
 
-	if len(os.Args) == 4 {
-		bin = os.Args[3]
-	} else {
-		bin = "C:/Users/dell/Downloads/chrome-win/chrome-win/chrome.exe"
-	}
-	u := launcher.New().Bin(bin).Headless(false).
+	// if len(os.Args) == 4 {
+	// 	bin = os.Args[3]
+	// } else {
+	// 	bin = "C:/Users/dell/Downloads/chrome-win/chrome-win/chrome.exe"
+	// }
+	u := launcher.New().Headless(false).
 		Leakless(false).MustLaunch()
 
 	rod.New().ControlURL(u).MustConnect().MustPage(os.Args[1]).
