@@ -18,7 +18,7 @@ func main() {
 	// } else {
 	// 	bin = "C:/Users/dell/Downloads/chrome-win/chrome-win/chrome.exe"
 	// }
-	u := launcher.New().Headless(true).
+	u := launcher.New().Headless(true).NoSandbox(false).
 		Leakless(false).MustLaunch()
 
 	rod.New().ControlURL(u).MustConnect().MustPage(os.Args[1]).
