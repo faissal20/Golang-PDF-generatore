@@ -24,7 +24,7 @@ func main() {
 }
 
 func generatePdf(url string, path string) {
-	bin := "C:/Users/dell/AppData/Local/Google/Chrome/Application/chrome.exe"
+	bin := "/usr/bin/google-chrome"
 
 	u := launcher.New().Bin(bin).
 		Headless(true).NoSandbox(false).
