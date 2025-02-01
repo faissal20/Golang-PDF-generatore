@@ -29,12 +29,13 @@ func generatePdf(url string, path string) {
 	u := launcher.New().Bin(bin).
 		Headless(true).NoSandbox(false).
 		Set("--database-path", "/tmp/rod").
-		Leakless(false).MustLaunch()
+		Leakless(false)
 
-	page := rod.New().ControlURL(u).MustConnect().MustPage(url).
+	page := rod.New().ControlURL(u.MustLaunch()).MustConnect().MustPage(url).
 		MustWaitLoad()
 
 	page.MustPDF(path)
 	// clean up
+	u.Cleanup()
 	page.MustClose()
 }
