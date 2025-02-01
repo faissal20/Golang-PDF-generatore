@@ -18,8 +18,7 @@ func main() {
 	fmt.Println("Creating browser")
 	u := launcher.New().Bin(bin).
 		Headless(true).NoSandbox(false).
-		Leakless(false).
-		Devtools(true)
+		Leakless(false)
 
 	fmt.Println("Launching browser")
 	defer u.Cleanup()
