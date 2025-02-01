@@ -37,5 +37,5 @@ func generatePdf(url string, path string) {
 	page.MustPDF(path)
 	// clean up
 	u.Cleanup()
-	page.MustClose()
+	page.Close()
 }
