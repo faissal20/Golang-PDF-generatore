@@ -33,7 +33,7 @@ func main() {
 		ctx.File(path)
 	})
 
-	router.Run("localhost:3030")
+	router.Run("localhost:3000")
 }
 
 func generatePdf(browser rod.Browser, url string, path string) {
