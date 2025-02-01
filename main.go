@@ -1,33 +1,40 @@
 package main
 
 import (
-	"os"
+	"math/rand"
+	"strconv"
 
+	"github.com/gin-gonic/gin"
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/launcher"
 )
 
 func main() {
+	router := gin.Default()
+	router.GET("/pdf", func(ctx *gin.Context) {
+		url := ctx.Query("url")
 
-	bin := ""
-	// print args
-	// print all args
+		path := "result/pdf_" + strconv.Itoa(rand.Int()) + ".pdf"
+		generatePdf(url, path)
 
-	if len(os.Args) == 4 {
-		bin = os.Args[3]
-	} else {
-		bin = "/usr/bin/chromium-browser"
-	}
+		ctx.File(path)
+	})
+
+	router.Run("localhost:3000")
+}
+
+func generatePdf(url string, path string) {
+	bin := "C:/Users/dell/AppData/Local/Google/Chrome/Application/chrome.exe"
+
 	u := launcher.New().Bin(bin).
 		Headless(true).NoSandbox(false).
 		Set("--database-path", "/tmp/rod").
 		Leakless(false).MustLaunch()
 
-	rod.New().ControlURL(u).MustConnect().MustPage(os.Args[1]).
-		MustWaitLoad().MustPDF(os.Args[2])
+	page := rod.New().ControlURL(u).MustConnect().MustPage(url).
+		MustWaitLoad()
 
+	page.MustPDF(path)
 	// clean up
-	rod.New().ControlURL(u).MustConnect().MustClose()
-
-	return
+	page.MustClose()
 }
