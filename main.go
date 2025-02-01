@@ -20,6 +20,7 @@ func main() {
 	}
 	u := launcher.New().Bin(bin).
 		Headless(true).NoSandbox(false).
+		Set("--database-path", "/tmp/rod").
 		Leakless(false).MustLaunch()
 
 	rod.New().ControlURL(u).MustConnect().MustPage(os.Args[1]).
