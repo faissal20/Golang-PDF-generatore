@@ -14,7 +14,7 @@ import (
 func main() {
 	router := gin.Default()
 	bin := "/usr/bin/chromium"
-	bin = "C:/Users/dell/AppData/Local/Google/Chrome/Application/chrome.exe"
+	// bin = "C:/Users/dell/AppData/Local/Google/Chrome/Application/chrome.exe"
 
 	fmt.Println("Creating browser")
 	u := launcher.New().Bin(bin).
