@@ -14,6 +14,7 @@ import (
 func main() {
 	router := gin.Default()
 	bin := "/usr/bin/chromium"
+	bin = "C:/Users/dell/AppData/Local/Google/Chrome/Application/chrome.exe"
 
 	fmt.Println("Creating browser")
 	u := launcher.New().Bin(bin).
@@ -25,6 +26,7 @@ func main() {
 	launcher := u.MustLaunch()
 	fmt.Println("Creating page")
 	browser := rod.New().ControlURL(launcher).Trace(true).SlowMotion(2 * time.Second).MustConnect()
+	defer browser.Close()
 
 	router.GET("/pdf", func(ctx *gin.Context) {
 		url := ctx.Query("url")
@@ -37,6 +39,12 @@ func main() {
 }
 
 func generatePdf(browser rod.Browser, url string, path string) {
-	page := browser.MustPage(url).MustWaitLoad()
+	fmt.Println("start page")
+	page := browser.MustPage(url)
+	fmt.Println("defer page close")
+	defer page.Close()
+	fmt.Println("wait load")
+	page.MustWaitLoad()
+	fmt.Println("pdf")
 	page.MustPDF(path)
 }
